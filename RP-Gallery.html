@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Rain's Papelaria</title>
+    
+    <!-- Google Fonts -->
+	    <!-- Patrick Hand -->
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+
+    <!-- Pacifico -->
+	<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+	
+    <!-- Bootstrap CSS (Responsive Layout) -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    
+<style>
+hr{
+    height: 5px;
+	background-color: black;
+	border: none;
+}
+	
+body {
+    background-image: url('green.png');
+}
+
+p {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 25px;
+    color: black;
+    font-weight: bold; /* Add this to ensure uniform thickness */
+	margin-left: 50px;
+    margin-right: 50px;
+}
+
+h1{
+    font-family: 'Pacifico', cursive;
+    font-weight: 1000;
+    color: #654321;
+	margin-left: 50px;
+    margin-right: 50px;
+}
+h2{
+    font-family: 'Pacifico', cursive;
+    font-weight: 1000;
+    color: #08457e;
+}
+
+h3{
+    font-family: 'Pacifico', cursive;
+    font-weight: 1000;
+    color: #08457e;
+}
+
+/* Vertical Navigation Bar */
+
+.vertical-nav {
+    z-index: 1000; /* Ensure it stays on top */
+    overflow-y: auto; /* Enables scrolling if links overflow */
+    width: 250px;
+    height: 120vh;
+    position: absolute;
+    background-color: rgba(255, 182, 193, 0.8);
+    padding-top: 20px;
+    box-shadow: 2px 0px 6px rgba(0, 0, 0, 0.1);
+	border-radius: 30px;
+}
+
+.vertical-nav a {
+    display: block;
+    color: black;
+    padding: 15px;
+    text-decoration: none;
+    font-family: 'Patrick Hand', cursive;
+    font-weight: bold;
+    border: 8px solid white;
+    margin: 20px 5px;
+    text-align: center;
+    border-radius: 30px;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.vertical-nav a:hover {
+    transform: scale(1.09);
+    transition: 0.5s ease;
+}
+
+.vertical-nav .active {
+    border: 7px solid green !important;
+}
+/* Main Content - Gradient Background */
+.main-content {
+    margin-left: 270px;
+    padding: 20px;
+    background-image: url('transparentbg.png');
+    /*background: linear-gradient(to bottom right, #fef1e6, #fad0c4);*/
+    min-height: 100vh;
+    border-radius: 20px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+header {
+    width: 100%;
+    height: auto; /* Adjust height as needed */
+    overflow: hidden;
+}
+
+.header-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Main Content - Gradient Background */
+
+.main-content {
+    margin-left: 270px;
+    padding: 20px;
+    background-image: url('transparentbg.png');
+	flex-content: 1;
+    min-height: calc(100vh - 80px);
+    border-radius: 10px;
+	box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    position: relative;
+    padding-bottom: 20px; 
+}
+
+/* Carousel Styles */
+
+.carousel-inner img, .carousel-inner video {
+    width: 100%;
+    height: auto;
+  
+}
+
+
+/* Lightbox Styles */
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+	margin-left: 50px;
+    margin-right: 50px;
+}
+
+
+.column {
+    width: 25%;
+    padding: 13px;
+}
+
+.column img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 10%;
+}
+
+.column img:hover {
+    opacity: 0.7;
+}
+
+/* Gallery Grid */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.gallery img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+/* Modal (Lightbox) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modal img {
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+}
+/* Navigation Buttons */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 15px 25px; /* Increased padding */
+    font-size: 30px; /* Larger font size */
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1); /* Slight zoom on hover */
+}
+
+.prev {
+    left: 20px; /* Adjusted for better positioning */
+}
+
+.next {
+    right: 20px;
+}
+/* Close Button */
+.close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #ccc;
+}
+
+.video-container {
+    width: 100%;
+    max-width: 400px; /* Adjusted for portrait display */
+    margin: auto;
+    height: 600px; /* Ensures portrait height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+	
+}
+
+video {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hide-sidebar {
+    display: none;
+}
+
+
+/* Footer Styles */
+footer {
+    background: linear-gradient(to right, #4169e1, #a8d8ff, #4169e1); /* Darker blue (#4169e1) edges */
+    color: white;
+    padding: 20px 10px; /* Reduced padding for smaller footer */
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer h2 {
+    font-family: 'Pacifico', cursive;
+    font-size: 24px; /* Reduced font size */
+    margin-bottom: 10px; /* Reduced margin */
+}
+
+footer p {
+    font-size: 14px; /* Smaller text size */
+    margin-bottom: 8px; /* Reduced margin */
+    letter-spacing: 0.3px; /* Slightly reduced letter spacing */
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 8px; /* Smaller margin between links */
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Social media icon styles */
+.social-icons {
+    margin-top: 10px; /* Reduced margin */
+}
+
+.social-icons a {
+    font-size: 20px; /* Smaller icon size */
+    margin: 0 10px; /* Smaller margin between icons */
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #ffb6c1; /* A soft pink on hover */
+}
+
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="header2.png" alt="Cute Stationery Header" class="header-image">
+</header>
+</br></br></br>
+<!-- Navigation Sidebar -->
+<nav class="vertical-nav">
+    <a href="RP-Home.html" style="background-color: #ffb6c1;">Home</a>
+    <a href="RP-AboutUs.html" style="background-color: #ffcccb;">About Us</a>
+    <a href="RP-Products.html" style="background-color: #ffdab9;">Our Products</a>
+    <a href="RP-Order.html" style="background-color: #ffa07a;">Order</a>
+    <a href="RP-Pricing.html" style="background-color: #f4a460;">Pricing & Packages</a>
+    <a class="active" href="RP-Gallery.html" style="background-color: #dda0dd;">Gallery</a>
+    <a href="RP-FAQs.html" style="background-color: #98fb98;">FAQs</a>
+    <a href="RP-ContactUs.html" style="background-color: #87cefa;">Contact Us</a>
+</nav>
+
+<div class="main-content">
+        <center>
+		</br></br><br>
+        <h1>Gallery</h1>
+		</br></br><br>
+		</center>
+         <p><strong>📢 Visit our booth at Adamson University, together with AduCats! 🎉 Grab awesome products and get a chance to win exciting prizes. See you there!</strong></p>
+        </br></br><br>
+    <div class="row">
+        <div class="column"><img src="g1.jpg" alt="Image 1" onclick="openModal(1)"></div>
+        <div class="column"><img src="g2.jpg" alt="Image 2" onclick="openModal(2)"></div>
+        <div class="column"><img src="g3.jpg" alt="Image 3" onclick="openModal(3)"></div>
+        <div class="column"><img src="g4.jpg" alt="Image 4" onclick="openModal(4)"></div>
+        <div class="column"><img src="g5.jpg" alt="Image 5" onclick="openModal(5)"></div>
+        <div class="column"><img src="g6.jpg" alt="Image 6" onclick="openModal(6)"></div>
+    </div>
+<br>
+<br>
+<br>
+    <br>
+    <br>
+<!--CAROUSEL-->	
+     <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="video-container">
+                    <video id="video1" autoplay muted>
+                        <source src="tiktok2.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="item">
+                <div class="video-container">
+                    <video id="video2" autoplay muted>
+                        <source src="tiktok1.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    </div>
+
+    <!-- jQuery & Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize Carousel
+            $("#myCarousel").carousel();
+
+            // Handle video mute/unmute on click
+            $("video").on("click", function() {
+                this.muted = !this.muted;
+            });
+
+            // Pause video when sliding
+            $("#myCarousel").on("slide.bs.carousel", function(event) {
+                var currentSlide = $(event.relatedTarget).find("video")[0];
+                $("video").each(function() {
+                    this.pause();
+                });
+                if (currentSlide) {
+                    currentSlide.play();
+                }
+            });
+        });
+    </script>
+
+    <br><br><br><br><br><br>
+<center>
+    <h3>Valentine's Specials ❤️ </h3>
+</center>
+<br><br>	
+	
+    <div class="row">
+        <div class="column"><img src="Valentines1.jpg" alt="Valentine's Image 1" onclick="openModal(7)"></div>
+        <div class="column"><img src="Valentines2.jpg" alt="Valentine's Image 2" onclick="openModal(8)"></div>
+        <div class="column"><img src="Valentines3.jpg" alt="Valentine's Image 3" onclick="openModal(9)"></div>
+        <div class="column"><img src="Valentines4.jpg" alt="Valentine's Image 4" onclick="openModal(10)"></div>
+    </div>
+	
+	<br><br><br><br><br><br><br><br>
+
+<div id="lightbox" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+        <div class="modal-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <a class="next" onclick="changeSlide(1)">&#10095;</a>
+    </div>
+
+    <script>
+        var images = [
+            "g1.jpg", "g2.jpg", "g3.jpg", "g4.jpg", "g5.jpg", "g6.jpg", 
+            "Valentines1.jpg", "Valentines2.jpg", "Valentines3.jpg", "Valentines4.jpg"
+        ];
+        var slideIndex = 1;
+        
+        function openModal(index) {
+            slideIndex = index;
+            document.getElementById("lightbox-img").src = images[slideIndex - 1];
+            document.getElementById("lightbox").style.display = "flex";
+        }
+        
+        function closeModal() {
+            document.getElementById("lightbox").style.display = "none";
+        }
+        
+        function changeSlide(n) {
+            slideIndex += n;
+            if (slideIndex > images.length) { slideIndex = 1; }
+            if (slideIndex < 1) { slideIndex = images.length; }
+            document.getElementById("lightbox-img").src = images[slideIndex - 1];
+        }
+    </script>
+<br><br>
+<hr>	
+<div class="container">
+    <div class="row align-items-center"> 
+        <div class="col-md-6 text-center">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.2034852005077!2d120.98304067614362!3d14.587477885897256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397ca20f5c0aea9%3A0x52dea1e12d0145a0!2sAdamson%20University%20(AdU)!5e0!3m2!1sen!2sph!4v1740873558172!5m2!1sen!2sph" 
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+        <div class="col-md-6 d-flex justify-content-center align-items-center text-center" style="min-height: 300px;">
+		    
+            <p><strong><br><br><br>AdUCats advocate peaceful co-existence between the humans and furry friends. See them here in
+			   <a href="https://www.facebook.com/groups/946027585595117" target="_blank">AduCats</a>
+			</strong></p>
+        </div>
+    </div>
+</div>
+<hr>
+<br><br><br><br>	
+</div>	
+
+<footer>
+        <h2>Rain's Papelaria</h2>
+        <p>&copy; 2025 Rain's Papelaria. All rights reserved.</p>
+        <p>For custom eco-friendly notepads and stationery, contact us!</p>
+        <p class="text-center">Developers: DANNIEL PATRICK GERONIMO, THANG THAWN KIM, KIARA ALEXA RIVILLA, SOFIA PAULA SALA, ANGELA MICAH SANGALANG</p>
+        <div id="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=61571182447265" target="_blank">Facebook</a>
+            <a href="https://www.tiktok.com/@rains.papeleria?_t=ZS-8tu981K3Yna&_r=1" target="_blank">TikTok</a>
+        </div>            
+    </footer>    
+</body>
+</html>
